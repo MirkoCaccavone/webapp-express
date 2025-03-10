@@ -1,12 +1,14 @@
 // importiamo il modulo express
 const express = require('express')
 const app = express()
-const port = 3000
+const port = process.env.PORT;
 
 // importo il router
 const postsRouter = require('./routers/routes');
 
 const imagePathMiddleware = require('./middleware/imagePath')
+
+
 
 
 // registro il body-parser per "application/json"
