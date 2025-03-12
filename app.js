@@ -2,6 +2,7 @@
 const express = require('express')
 const app = express()
 const port = process.env.PORT;
+const cors = require('cors')
 
 // importo il router
 const postsRouter = require('./routers/routes');
@@ -15,6 +16,8 @@ const errorHandler = require('./middleware/errorHandler');
 // registro il body-parser per "application/json"
 // interpreta quello che sarà passato come file JSON
 app.use(express.json());
+
+app.use(cors({ origin: process.env.FE_APP }))
 
 // Serve i file statici dalla cartella 'public'
 app.use(express.static('public'));

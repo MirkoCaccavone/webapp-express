@@ -38,7 +38,12 @@ function show(req, res) {
         if (err) return res.status(500).json({ error: 'Database query failed' })
         if (results.length === 0) return res.status(404).json({ error: 'Movie not found' })
 
-        const movie = results[0];
+        // versione mappata del risultato
+        const movie = {
+            ...results[0],
+            image: req.imagePath + results[0].image
+        };
+
 
         connection.query(reviewSql, [id], (err, reviewResult) => {
 
