@@ -56,6 +56,25 @@ function show(req, res) {
     })
 }
 
+function store(req, res, next) {
+    // recuperiamo le altre info
+    const { title, director, abstract } = req.body;
+
+    // gestiamo ilvalore del nome file creato dal middleware
+    const imageName = `${req.file.filename}`;
+
+    // creiamo la query
+    const query = "INSERT INTO movies (title, director,image, abstract) VALUES (?,?,?,?)";
+
+    // eseguiamo la query per aggiungere una rescensione
+    connection.query(query, [title, director, imageName, abstract], (err, results) => {
+
+        if (err) return next(new Error("Errore interno del server"));
+        res.status(201);
+        res.json({ message: "film aggiunto con successo" })
+    });
+}
+
 // inserimento nuova review
 function storeReview(req, res) {
     // recuperiamo l'id 
@@ -76,4 +95,4 @@ function storeReview(req, res) {
     });
 }
 
-module.exports = { index, show, storeReview }
+module.exports = { index, show, store, storeReview }
